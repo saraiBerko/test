@@ -28,6 +28,7 @@ export default {
   },
 
   methods: {
+    // comment
     setSelectedButton (type: string) {
       this.selectedButton = type
       this.$emit('setDisplayedComponent', type)
