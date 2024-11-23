@@ -2,7 +2,7 @@
   <div class="layout">
     <interests-sidebar @setDisplayedComponent="setDisplayedComponent"></interests-sidebar>
     <div class="main-content">
-      <interests v-if="displayedComponent === 'create'" />
+      <interests v-if="displayedComponent === 'create'" @setDisplayedComponent="setDisplayedComponent"/>
       <recommendations v-else />
     </div>
   </div>
@@ -23,7 +23,7 @@ export default {
   components: { InterestsSidebar, Interests, Recommendations },
 
   methods: {
-    setDisplayedComponent (payload) {
+    setDisplayedComponent (payload = null) {
       this.displayedComponent = payload
     }
   }

@@ -2,12 +2,8 @@ import axios from 'axios'
 
 function createAxiosInstance () {
   const instance = axios.create({
-    baseURL:'',
-    timeout: config.timeout,
-    headers: {
-      Authorization: config.authToken ? 'JWT ' + config.authToken : null
-    }
+    baseURL: 'localhost:8080'
   })
   return instance
 }
-const axiosInstance = createAxiosInstance()
+export const axiosInstance = createAxiosInstance()
