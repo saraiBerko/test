@@ -7,12 +7,12 @@
       </div>
       <div class="interests-item">
         <h1>Interests:</h1>
-        <span v-for="(interests, index) in interestsOptions" :key="index" class="framed-text interestes" :class="{'clicked': selectedInterests === interests}" @click="setSelectedInterests(interests)">
+        <span v-for="(interests, index) in interestsOptions" :key="index" class="framed-text interestes" :class="{'clicked': selectedInterests[index] === interests}" @click="setSelectedInterests(interests, index)">
           {{ getInterestsString(interests) }}
         </span>
       </div>
     </div>
-    <button @click="submitUserSelection">submit</button>
+    <button @click="submitUserInterestsSelection">submit</button>
   </div>
 </template>
 
@@ -25,7 +25,7 @@ export default {
   data () {
     return {
       interestsOptions: interestsOptions,
-      selectedInterests: null
+      selectedInterests: {}
     }
   },
 
@@ -41,11 +41,14 @@ export default {
     getInterestsString (interests) {
       return interests.join(', ')
     },
-    setSelectedInterests (interests) {
-      this.selectedInterests = interests
+    setSelectedInterests (interests : string[], index : number) {
+      if (Object.keys(this.selectedInterests).length && !this.selectedInterests[index]) {
+        this.selectedInterests = {}
+      }
+      this.selectedInterests[index] = interests
     },
-    submitUserSelection () {
-      this.$emit('setDisplayedComponent')
+    submitUserInterestsSelection () {
+      this.getRecommendationByInterests(this.selectedInterests, this.userID)
     }
   }
 
@@ -54,7 +57,7 @@ export default {
 
 <style scoped>
  .framed-text {
-    display: inline-block; /* Ensure the frame wraps only the text */
+    display: block; /* Ensure the frame wraps only the text */
     border: 2px solid black; /* Add the black frame */
     padding: 5px; /* Add some spacing inside the frame */
     margin: 2px; /* Add space around the frame */

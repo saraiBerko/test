@@ -3,14 +3,14 @@
     <div class="button-container">
       <button
         class="create-button"
-        :class="{ 'selected': selectedButton === 'create' }"
+        :class="{ 'selected': displayedComponent === 'create' }"
         @click="setSelectedButton('create')"
       >
         Create Interests
       </button>
       <button
         class="get-button"
-        :class="{ 'selected': selectedButton === 'get' }"
+        :class="{ 'selected': displayedComponent === 'get' }"
         @click="setSelectedButton('get')"
       >
         Get Interests
@@ -20,18 +20,20 @@
 </template>
 
 <script lang="ts">
-export default {
-  data () {
-    return {
-      selectedButton: 'create' as string
-    }
-  },
+import { mapState, mapActions } from "pinia"
+import { useInterestsStore } from "../../stores/InterestsStore"
 
+export default {
+  computed: {
+    ...mapState(useInterestsStore, {
+      displayedComponent: state => state.displayedComponent
+    })
+  },
   methods: {
+     ...mapActions(useInterestsStore, ["setDisplayedComponent"]),
     // comment
     setSelectedButton (type: string) {
-      this.selectedButton = type
-      this.$emit('setDisplayedComponent', type)
+      this.setDisplayedComponent(type)
     }
   }
 

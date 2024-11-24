@@ -6,21 +6,62 @@
         <span class="framed-text">{{ userID }}</span>
       </div>
       <div class="interests-item">
-        <span>recommendation</span>
-        <span>recommendation</span>
-        <span>recommendation</span>
-        <span>recommendation</span>
+        <span
+          v-for="(recommendation, index) in recommendations[recommendationsKey][0]"
+          :key="index"
+          class="framed-text interestes"
+          >{{ recommendation }}</span
+        >
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {
+import { mapState } from "pinia"
+import { useInterestsStore } from "../../stores/InterestsStore"
+import { useBaseStore } from "../../stores/BaseStore"
 
+export default {
+  computed: {
+    ...mapState(useInterestsStore, {
+      recommendations: state => state.recommendations,
+    }),
+    ...mapState(useBaseStore, {
+      userID: state => state.userID
+    }),
+    recommendationsKey () {
+       const key = Object.keys(this.recommendations)[0]
+       return key
+    }
+  },
+
+  created () {
+    console.log(this.recommendations)
+  }
 }
 </script>
 
-<style>
+<style scoped>
+.user-item {
+  display: flex;
+  align-items: center; /* Aligns items (h1 and span) vertically */
+  gap: 8px; /* Adds space between the h1 and span */
+}
 
+.user-item h1 {
+  font-size: 16px; /* Adjusts the size of the h1 for inline styling */
+  margin: 0; /* Removes default margin */
+}
+.framed-text {
+    display: block; /* Ensure the frame wraps only the text */
+    border: 2px solid black; /* Add the black frame */
+    padding: 5px; /* Add some spacing inside the frame */
+    margin: 2px; /* Add space around the frame */
+    border-radius: 5px; /* Optional: Rounded corners */
+  }
+
+  .framed-text.interestes:hover {
+    background-color: #70b6f8;
+  }
 </style>

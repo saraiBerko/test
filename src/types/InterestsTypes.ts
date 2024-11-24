@@ -1,1 +1,1 @@
-export const userInterests = string[]
+export type userInterests = string[]
