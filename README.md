@@ -9,6 +9,8 @@ This project extend an existing Node.js web application by adding new features t
 3. run app - npm run dev
 ```
 
+In the "doc" folder, you can find the initial FE planning.
+
 ### Run Unit Tests with [Vitest](https://vitest.dev/)
 
 ```sh
