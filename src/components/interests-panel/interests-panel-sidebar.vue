@@ -4,14 +4,14 @@
       <button
         class="create-button"
         :class="{ 'selected': displayedComponent === 'create' }"
-        @click="setSelectedButton('create')"
+        @click="setSelectedComponent('create')"
       >
         Create Interests
       </button>
       <button
         class="get-button"
         :class="{ 'selected': displayedComponent === 'get' }"
-        @click="setSelectedButton('get')"
+        @click="setSelectedComponent('get')"
       >
         Get Interests
       </button>
@@ -31,8 +31,8 @@ export default {
   },
   methods: {
      ...mapActions(useInterestsStore, ["setDisplayedComponent"]),
-    // comment
-    setSelectedButton (type: string) {
+   
+    setSelectedComponent (type: string) {
       this.setDisplayedComponent(type)
     }
   }

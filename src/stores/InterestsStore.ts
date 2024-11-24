@@ -4,17 +4,19 @@ import { axiosInstance } from '../axios'
 
 export const useInterestsStore = defineStore('InterestsStore', {
   state: () => ({
-        recommendations: {} ,
-        displayedComponent: 'create'
+        recommendations: {} as Object,
+        displayedComponent: 'create' as string
     }),
 
   actions: {
+     // set the main content component - create or get 
     setDisplayedComponent (payload : string) {
       this.displayedComponent = payload
     },
 
     async getRecommendationByInterests (interests : string[], userID : string) {
       const key = Object.keys(interests)[0]
+      // check if the relevant information is not in cache.
       await this.getUserDataFromCache(key)
       if (!Object.keys(this.recommendations).length) {
         return axiosInstance.post('http://localhost:8080', {
@@ -32,11 +34,10 @@ export const useInterestsStore = defineStore('InterestsStore', {
             "Movie: 'Interstellar'"]]
           } else {
              this.recommendations[key] = [[
-            "Book: 'sdfnsjmdbf' ",
-            "Article: 'sdfsfsdf'",
-            "Movie: 'dsdfsdfdsf'"]]
+            "Book: 'Harry Potter and the Sorcerer's Stone' by J.K. Rowling",
+            "Movie: 'The Lord of the Rings' Trilogy'",
+            "Game: 'The Legend of Zelda'"]]
           }
-          
              this.saveRecommendationsInCache()
         })
       } else {
@@ -47,6 +48,7 @@ export const useInterestsStore = defineStore('InterestsStore', {
       window.inMemoryCache  = window.inMemoryCache || {}
       window.inMemoryCache.userRecommendations = window.inMemoryCache.userRecommendations || []
       window.inMemoryCache.userRecommendations.push(this.recommendations)
+      // display recommendation component
       this.setDisplayedComponent('get')
     },
     getUserDataFromCache (key) {

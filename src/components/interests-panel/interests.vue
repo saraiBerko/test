@@ -12,7 +12,8 @@
         </span>
       </div>
     </div>
-    <button @click="submitUserInterestsSelection">submit</button>
+    <h1 v-if="displayEmptyAlert" class="no-selection-text">Please select interests to proceed</h1>
+    <button class="submit-button" @click="submitUserInterestsSelection">submit</button>
   </div>
 </template>
 
@@ -25,7 +26,8 @@ export default {
   data () {
     return {
       interestsOptions: interestsOptions,
-      selectedInterests: {}
+      selectedInterests: {},
+      displayEmptyAlert: false
     }
   },
 
@@ -46,8 +48,13 @@ export default {
         this.selectedInterests = {}
       }
       this.selectedInterests[index] = interests
+      this.displayEmptyAlert = false
     },
     submitUserInterestsSelection () {
+      if (!Object.keys(this.selectedInterests).length) {
+        this.displayEmptyAlert = true
+        return
+      }
       this.getRecommendationByInterests(this.selectedInterests, this.userID)
     }
   }
@@ -71,5 +78,13 @@ export default {
   .framed-text.interestes.clicked {
   background-color: #70b6f8;
   border-color: lightblue;
+}
+
+.submit-button{
+  background-color: #70f8b9;
+}
+
+.no-selection-text{
+  color: red;
 }
 </style>

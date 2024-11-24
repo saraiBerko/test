@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import InterestsSidebar from '../components/interests-panel/interests-sidebar.vue'
+import InterestsSidebar from '../components/interests-panel/interests-panel-sidebar.vue'
 import Interests from '../components/interests-panel/interests.vue'
 import Recommendations from '../components/interests-panel/recommendations.vue'
 import { mapState } from "pinia"
