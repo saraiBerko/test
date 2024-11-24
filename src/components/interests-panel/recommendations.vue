@@ -38,10 +38,6 @@ export default {
        const key = Object.keys(this.recommendations)[0]
        return key
     }
-  },
-
-  created () {
-    console.log(this.recommendations)
   }
 }
 </script>
