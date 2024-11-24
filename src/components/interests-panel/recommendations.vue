@@ -1,6 +1,6 @@
 <template>
   <div class="recommendations-component">
-    <div class="main-content">
+    <div v-if="!recommendationError" class="main-content">
       <div class="user-item">
         <h1>User ID:</h1>
         <span class="framed-text">{{ userID }}</span>
@@ -14,6 +14,9 @@
         >
       </div>
     </div>
+    <div v-else>
+      <h1>{{ recommendationError }}</h1>
+    </div>
   </div>
 </template>
 
@@ -26,6 +29,7 @@ export default {
   computed: {
     ...mapState(useInterestsStore, {
       recommendations: state => state.recommendations,
+      recommendationError: state => state.recommendationError,
     }),
     ...mapState(useBaseStore, {
       userID: state => state.userID

@@ -5,7 +5,8 @@ import { axiosInstance } from '../axios'
 export const useInterestsStore = defineStore('InterestsStore', {
   state: () => ({
         recommendations: {} as Object,
-        displayedComponent: 'create' as string
+        displayedComponent: 'create' as string,
+        recommendationError: '' as string
     }),
 
   actions: {
@@ -26,7 +27,13 @@ export const useInterestsStore = defineStore('InterestsStore', {
           this.recommendations[key] = []
           this.recommendations[key].push(response.recommendations)
           this.saveRecommendationsInCache()
-        }).catch(() => {
+        }).catch((error) => {
+          // error handling
+          if (error.statusCode && error.statusCode !== 200) {
+            this.recommendationError = error.body['error']
+            return
+          }
+          // mock the llm response
           if(key === '0') {
             this.recommendations[key] = [[
             "Book: 'Dune' by Frank Herbert",
